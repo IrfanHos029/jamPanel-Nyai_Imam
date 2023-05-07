@@ -371,7 +371,7 @@ void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada 
                 x = 0;return;}
      if(dDT==1)
         {
-        fType(1);  //Marquee    jam yang tampil di bawah
+        fType(7);  //Marquee    jam yang tampil di bawah
         Disp.drawText(DWidth - x, 0, msg); //runing teks diatas
         fType(1);
         if (x<=6)                     { drawGreg_TS(16-x);}
@@ -386,7 +386,7 @@ void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada 
         else if (x>=(fullScroll-6))   { drawGreg_TS((fullScroll-x)-6);}
         else                          {  Disp.drawRect(1,1,62,8);
                                         drawGreg_TS(0);}  //posisi jam nya yang diatas
-        fType(1); //Marquee  running teks dibawah
+        fType(7); //Marquee  running teks dibawah
         Disp.drawText(DWidth - x, 9 , msg);//runinng teks dibawah
         }
         DoSwap = true; 
@@ -510,6 +510,7 @@ void fType(int x)
     else if(x==4) Disp.setFont(Font4);
     else if(x==5) Disp.setFont(Font5);
     else if(x==6) Disp.setFont(Font6); 
+    else if(x==7) Disp.setFont(Font7); 
   }
 
 // digunakan untuk menghitung hari pasaran

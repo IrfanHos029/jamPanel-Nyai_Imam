@@ -10,7 +10,8 @@ JAM_DIGITAL_MODIF 64 X 16
 #include <font/SystemFont5x7.h>
 #include <font/Font3x5.h>
 #include <font/EMSans8x16.h>
-#include <font/Calibri14.h>
+#include <font/Calibri14.h>  
+#include <font/SystemFont5x7WW.h>
 
 #include <DS3231.h>
 #include <EEPROM.h>
@@ -27,6 +28,7 @@ JAM_DIGITAL_MODIF 64 X 16
 #define Font4 KecNumber
 #define Font5 EMSans8x16
 #define Font6 Calibri14
+#define Font7 SystemFont5x7WW
     
 // Object Declarations
 DMD3 Disp(2,1);
@@ -163,8 +165,10 @@ void loop()
 //    dwMrq(drawShow1(),75,2,1);
 //    dwMrq(drawShow2 ,75,2,2);
     drawSide2(2);
-    drawSide1(3);
-    dwMrq(drawNama(),75,1,4);  //running text
+     dwMrq(TGLJAWA(),75,2,3); 
+    drawSide1(4);
+    dwMrq(drawNama1(),75,1,5);  //running text
+    dwMrq(drawNama2(),75,2,6);  //running text
     
     //drawSholat(1);
     drawAzzan(100); 
@@ -175,7 +179,9 @@ void loop()
     if(RunFinish==1) {RunSel = 2; RunFinish =0;}                      //after anim 1 set anim 2
     if(RunFinish==2) {RunSel = 3; RunFinish =0;}                      //after anim 2 set anim 3
     if(RunFinish==3) {RunSel = 4; RunFinish =0;}
-    if(RunFinish==4)  {RunSel = 1;  RunFinish =0;} 
+    if(RunFinish==4)  {RunSel = 5;  RunFinish =0;} 
+    if(RunFinish==5)  {RunSel = 6;  RunFinish =0;} 
+    if(RunFinish==6)  {RunSel = 1;  RunFinish =0;}
 
     if (stringComplete) {
     if(inputString.substring(0,2) == "CK")

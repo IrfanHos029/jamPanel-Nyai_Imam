@@ -21,9 +21,14 @@ char * drawDayDate()
       return out;
   }
 
-char *  drawNama()
+char *  drawNama1()
   {
-      static char  out[150]="Suhartono.Khusnul.Irfan.Alfin.Alfian";
+      static char  out[150]="Mas Imam,Mas Aminah,Mas Khoridah,Mas Saniyah";
+      return out;
+  }
+  char *  drawNama2()
+  {
+      static char  out[150]="Mas Hindun,Mas Khomairoh,Mas Nadibah,Mas Sa'diyah,Mas Chafshoh";
       return out;
   }
 
@@ -46,8 +51,8 @@ void drawShow1(int sNum,int c) // Box Sholah Time   tampilan jadwal sholat
 
     if((Tmr-lsRn)>1000){state = !state; lsRn=Tmr; }
     ////////////
-    fType(1); dwCtr(0,0,Buff_hariN); //tulisan hari biasa
-    fType(1); dwCtr(0,9,Buff_hariJ);   //tulisan hari jawa 
+    fType(7); dwCtr(0,0,Buff_hariN); //tulisan hari biasa
+    fType(7); dwCtr(0,9,Buff_hariJ);   //tulisan hari jawa 
     fType(1); dwCtr(42,0,Buff_Jam);
     fType(1); dwCtr(42,9,Buff_Men);
     if(state){fType(1); dwCtr(59,4,point1);}
@@ -140,7 +145,7 @@ void Reset(byte state){
       }          
   }
 
-
+*/
   char * TGLJAWA()
 {
       static char  out[45];
@@ -149,7 +154,7 @@ void Reset(byte state){
       return out;     
              
   }
-
+/*
   void drawTgl(uint16_t y)   // Draw tanggal nasional
   {
       static char  out[30];
