@@ -34,13 +34,13 @@ JAM_DIGITAL_MODIF 64 X 16
 DMD3 Disp(2,1);
 char *pasar[] ={"WAGE", "KLIWON", "LEGI", "PAHING", "PON"}; 
 //char daysOfTheWeek[7][12] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"};
-char *mounthJawa[]= {"Muharram","Shafar","Rab.awal","Rab.akhir","Jum.awal","Jum.akhir","Rajab","Sya'ban","Ramadhan","Syawal","Dzulqa'dah","Dzulhijah"};
+char *mounthJawa[]= {"MUHARRAM","SHAFAR","RAB.AWAL","RAB.AKHIR","JUM.AWAL","JUM.AKHIR","RAJAB","SYA'BAN","RAMADHAN","SYAWAL","DZULQA'DAH","DZULHIJAH"};
 char *sholatCall[] = {"IMSAK","SUBUH","TERBIT","DHUHA","DUHUR","ASHAR","MAGRIB","ISYA","JUM'AT"};   
 //char *sholatCallDis[] = {"IMSAK","SUBUH","TERBT","DHUHA","DUHUR","ASHAR","MAGRB","ISYA","JUMAT"};  
 int maxday[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 RTClib          RTC;
 DS3231          Clock;
-char Hari[7][12] = {"MINGGU","SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU"};
+char *Hari[] = {"SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU","MINGGU"};
 
 //Structure of Variable 
 typedef struct  // loaded to EEPROM
@@ -111,9 +111,10 @@ static uint16_t saveTime = 0;
 bool stateBlink=false;
 
 
-float latitude = -7.238816115709593;
-float longitude = 112.75318149040366;
-float timezone = +7;
+float latitude =  -7.364057;
+float longitude = 112.646222;
+float timezone = +07.00;
+float ketinggian = 10;
  String inputString = "";         // a String to hold incoming data
   bool stringComplete = false;  // whether the string is complete
   int setHours,setMinutes;
@@ -150,7 +151,7 @@ void loop()
     // Reset & Init Display State
     update_All_data();   //every time
     check_azzan();
-    Reset(); //fungsion restart
+    //Reset(); //fungsion restart
     DoSwap  = false ;
     //fType(1);  
     Disp.clear();
@@ -170,7 +171,7 @@ void loop()
     dwMrq(drawNama1(),75,1,5);  //running text
     dwMrq(drawNama2(),75,2,6);  //running text
     
-    //drawSholat(1);
+   // drawSholat(2);
     drawAzzan(100); 
     runningAfterAdzan(101);
     // =========================================
@@ -257,7 +258,7 @@ void Disp_init()
   { Disp.setDoubleBuffer(true);
     Timer1.initialize(2000);
     Timer1.attachInterrupt(scan);
-    setBrightness(200);
+    setBrightness(100);
     fType(1);  
     Disp.clear();
     Disp.swapBuffers();
@@ -301,10 +302,14 @@ void update_All_data()
   {
   uint8_t   date_cor = 0;
   updateTime();
-  sholatCal();                                                // load Sholah Time                                         // check jadwal Puasa Besok
-  if(floatnow>00.00) {date_cor = 1;}                     // load Hijr Date + corection next day after Mhagrib 
+  sholatCal();                                                // load Sholah Time
+//  check_puasa();                                              // check jadwal Puasa Besok
+  if(floatnow>sholatT[6]) {date_cor = 1;}                     // load Hijr Date + corection next day after Mhagrib 
   nowH = toHijri(now.year(),now.month(),now.day(),date_cor);  // load Hijir Date
   
+  if ((floatnow > (float)21.00) or (floatnow < (float)3.30) )    {setBrightness(15);}
+      else                                                   {setBrightness(150);}  
+     /////// Serial.println((float)3.5);
   }
   
     

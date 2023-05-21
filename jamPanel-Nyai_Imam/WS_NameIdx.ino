@@ -23,12 +23,12 @@ char * drawDayDate()
 
 char *  drawNama1()
   {
-      static char  out[150]="Mas Imam,Mas Aminah,Mas Khoridah,Mas Saniyah";
+      static char  out[]="Mas Imam,Mas Aminah,Mas Khoridah,Mas Saniyah";
       return out;
   }
   char *  drawNama2()
   {
-      static char  out[150]="Mas Hindun,Mas Khomairoh,Mas Nadibah,Mas Sa'diyah,Mas Chafshoh";
+      static char  out[]="Mas Hindun,Mas Khumairo',Mas Nadibah,Mas Sa'diyah,Mas Chafsoh";
       return out;
   }
 
@@ -36,8 +36,8 @@ void drawShow1(int sNum,int c) // Box Sholah Time   tampilan jadwal sholat
   {
     static uint32_t   lsRn;
     uint32_t          Tmr = millis();
-    char  Buff_hariN[20];
-    char  Buff_hariJ[20];
+   static char  Buff_hariN[50];
+    static char  Buff_hariJ[50];
     char Buff_Jam[20];
     char Buff_Men[20];
     char point1[2] = ":";

@@ -43,7 +43,7 @@ void drawAzzan(int DrawAdd)
       {dwDone(DrawAdd);
        ct = 0;
        Buzzer(0);
-       RunSel = 101;
+       RunSel = 1;
        }
   }
 
@@ -173,7 +173,7 @@ void drawSide1(int DrawAdd)
     Disp.drawFilledRect(DrawWd/2+x+c,0,63,15,0);
   }
 
-  /*///////////////////////////
+  ///////////////////////////
 void drawSholat(int DrawAdd)
   {
     // check RunSelector
@@ -225,7 +225,7 @@ void drawSholat(int DrawAdd)
     Disp.drawFilledRect(c,0,c+DrawWd/2-x,15,0);
     Disp.drawFilledRect(DrawWd/2+x+c,0,63,15,0);
   }
-*/
+
   void drawSholat_S(int sNum,int c) // Box Sholah Time   tampilan jadwal sholat
   {
 
