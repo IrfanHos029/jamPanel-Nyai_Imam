@@ -32,15 +32,20 @@ JAM_DIGITAL_MODIF 64 X 16
     
 // Object Declarations
 DMD3 Disp(2,1);
+
+
 char *pasar[] ={"WAGE", "KLIWON", "LEGI", "PAHING", "PON"}; 
 //char daysOfTheWeek[7][12] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"};
 char *mounthJawa[]= {"MUHARRAM","SHAFAR","RAB.AWAL","RAB.AKHIR","JUM.AWAL","JUM.AKHIR","RAJAB","SYA'BAN","RAMADHAN","SYAWAL","DZULQA'DAH","DZULHIJAH"};
 char *sholatCall[] = {"IMSAK","SUBUH","TERBIT","DHUHA","DUHUR","ASHAR","MAGRIB","ISYA","JUM'AT"};   
 //char *sholatCallDis[] = {"IMSAK","SUBUH","TERBT","DHUHA","DUHUR","ASHAR","MAGRB","ISYA","JUMAT"};  
+char *Hari[] = {"SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU","MINGGU"};
 int maxday[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 RTClib          RTC;
 DS3231          Clock;
-char *Hari[] = {"SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU","MINGGU"};
+
+
 
 //Structure of Variable 
 typedef struct  // loaded to EEPROM
@@ -115,11 +120,7 @@ float latitude =  -7.364057;
 float longitude = 112.646222;
 float timezone = +07.00;
 float ketinggian = 10;
- String inputString = "";         // a String to hold incoming data
-  bool stringComplete = false;  // whether the string is complete
-  int setHours,setMinutes;
-  int setTgl,setBln,setThn;
-  int setDay;
+
 //=======================================
 //===SETUP=============================== 
 //=======================================
@@ -151,9 +152,8 @@ void loop()
     // Reset & Init Display State
     update_All_data();   //every time
     check_azzan();
-    //Reset(); //fungsion restart
     DoSwap  = false ;
-    //fType(1);  
+    fType(1);  
     Disp.clear();
 
     // =========================================
@@ -161,19 +161,15 @@ void loop()
     // =========================================
 
     anim_JG(1);                                                 // addr: 1 show date time
-  //  drawHari(1); //hari
-    //dwCek(TGLJAWA(),75,2,3);  //tanggalan
-//    dwMrq(drawShow1(),75,2,1);
-//    dwMrq(drawShow2 ,75,2,2);
     drawSide2(2);
-     dwMrq(TGLJAWA(),75,2,3); 
+    dwMrq(TGLJAWA(),75,2,3); 
     drawSide1(4);
     dwMrq(drawNama1(),75,1,5);  //running text
     dwMrq(drawNama2(),75,2,6);  //running text
+     // drawSholat(1);
     
-   // drawSholat(2);
     drawAzzan(100); 
-    runningAfterAdzan(101);
+    //runningAfterAdzan(101);
     // =========================================
     // Display Control Block ===================
     // =========================================
@@ -184,65 +180,8 @@ void loop()
     if(RunFinish==5)  {RunSel = 6;  RunFinish =0;} 
     if(RunFinish==6)  {RunSel = 1;  RunFinish =0;}
 
-    if (stringComplete) {
-    if(inputString.substring(0,2) == "CK")
-    {//Serial.println(inputString);
-      String setJam,setMenit;
-      inputString.remove(0,2);
-      delay(50);
-      setJam = inputString.substring(0,2);    
-      setMenit = inputString.substring(3,5);
-      setHours = setJam.toInt();
-      setMinutes = setMenit.toInt();
-      Clock.setHour(setHours);
-      Clock.setMinute(setMinutes);
-      inputString = "";
-      stringComplete = false;
-    }
-    else if(inputString.substring(0,2) == "DT")
-    {
-      String setTgls,setBlns,setThns;
-      inputString.remove(0,2);
-      delay(50);
-      setTgls = inputString.substring(0,2);
-      setBlns = inputString.substring(2,4);
-      setThns = inputString.substring(4,6);
-
-//      Serial.println(String() + "tanggal:" + setTgls);
-//      Serial.println(String() + "bulan  :" + setBlns);
-//      Serial.println(String() + "tahun  :" + setThns);
-      
-      setTgl = setTgls.toInt();
-      setBln = setBlns.toInt();
-      setThn = setThns.toInt();
-
-      Clock.setDate(setTgl);
-      Clock.setMonth(setBln);
-      Clock.setYear(setThn);
-
-      inputString = "";
-      stringComplete = false;
-    }
-    else if(inputString.substring(0,2) == "DY")
-    {
-      String setDays;
-      inputString.remove(0,2);
-      delay(50);
-      setDays = inputString.substring(0,1);
-      setDay = setDays.toInt();
-      if(setDay > 0 && setDay < 8){  Clock.setDoW(setDay); }
-      //Serial.println(String() + "hari:" + setDay);
-      inputString = "";
-      stringComplete = false;
-    }
-
-    
-    else
-    {
-       inputString="";
-    }
-  }
-    //if(RunFinish==101)  {RunSel = 1;  RunFinish =0;} 
+   
+    if(RunFinish==100)  {RunSel = 1;  RunFinish =0;} 
     //if(RunFinish==4)  {RunSel = 1;  RunFinish =0;} 
     // =========================================
     // Swap Display if Change===================
@@ -258,7 +197,7 @@ void Disp_init()
   { Disp.setDoubleBuffer(true);
     Timer1.initialize(2000);
     Timer1.attachInterrupt(scan);
-    setBrightness(100);
+    setBrightness(200);
     fType(1);  
     Disp.clear();
     Disp.swapBuffers();
@@ -278,25 +217,7 @@ void updateTime()
     floatnow = (float)now.hour() + (float)now.minute()/60 + (float)now.second()/3600;
     daynow   = Clock.getDoW();    // load day Number
   }
-  
-void serialEvent() {
-  while (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    Buzzer(1);
-    delay(50);
-    Buzzer(0);
-    delay(50);
-    // if the incoming character is a newline, set a flag so the main loop can
-    // do something about it:
-    if (inChar == '\n') {
-      stringComplete = true;
-      Serial.println("DONE");
-    }
-  }
-}
+
 
 void update_All_data()
   {
@@ -307,8 +228,8 @@ void update_All_data()
   if(floatnow>sholatT[6]) {date_cor = 1;}                     // load Hijr Date + corection next day after Mhagrib 
   nowH = toHijri(now.year(),now.month(),now.day(),date_cor);  // load Hijir Date
   
-  if ((floatnow > (float)21.00) or (floatnow < (float)3.30) )    {setBrightness(15);}
-      else                                                   {setBrightness(150);}  
+  if ((floatnow > (float)22.00) or (floatnow < (float)3.00) )    {setBrightness(100);}
+      else                                                   {setBrightness(200);}  
      /////// Serial.println((float)3.5);
   }
   
@@ -323,7 +244,7 @@ void check_azzan()
             if(floatnow >= sholatT[i])
               {
                 SholatNow = i;
-                if(!azzan and (floatnow > sholatT[i]) and (floatnow < (sholatT[i]+0.03))) 
+                if(!azzan and (floatnow > sholatT[i]) and (floatnow < (sholatT[i]+0.01))) 
                   { 
                     azzan =true;
                     RunSel = 100;

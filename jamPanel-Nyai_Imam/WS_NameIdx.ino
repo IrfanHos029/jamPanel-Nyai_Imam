@@ -81,7 +81,8 @@ void drawShow2(int sNum,int c){
     DoSwap = true;
 }
 
-void Reset(byte state){
+void Reset(byte state)
+{
   if(state==1){
     digitalWrite(reset,0);
   }
@@ -89,6 +90,15 @@ void Reset(byte state){
     digitalWrite(reset,0);
   }
 }
+
+ char * TGLJAWA()
+    {
+      static char  out[45];
+      sprintf(out,"%02d-%s-%dH\0",nowH.hD,mounthJawa[nowH.hM-1],nowH.hY);
+      
+      return out;     
+             
+  }
 
 /*
  void dwCek(const char* msg, int Speed, int dDT, int DrawAdd) //ranning tanggalan single
@@ -146,14 +156,7 @@ void Reset(byte state){
   }
 
 */
-  char * TGLJAWA()
-{
-      static char  out[45];
-      sprintf(out,"%02d-%s-%dH\0",nowH.hD,mounthJawa[nowH.hM-1],nowH.hY);
-      
-      return out;     
-             
-  }
+ 
 /*
   void drawTgl(uint16_t y)   // Draw tanggal nasional
   {

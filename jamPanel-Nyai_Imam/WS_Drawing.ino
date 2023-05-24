@@ -43,10 +43,8 @@ void drawAzzan(int DrawAdd)
       {dwDone(DrawAdd);
        ct = 0;
        Buzzer(0);
-       RunSel = 1;
-       }
+      }
   }
-
 
 void runningAfterAdzan(int DrawAdd) //running teks ada jam nya
   { 
@@ -495,10 +493,10 @@ void dwCtr(int x, int y,const char* Msg)
 
 void Buzzer(uint8_t state)
   {
-    if(state == 1)
-      {digitalWrite(BUZZ,HIGH);}
+    if(state ==1 ) //dapat dikasih kondisi jika diwaktu tertentu buzzer tidak aktif
+      {tone(BUZZ, 500, 400);}
     else 
-      {digitalWrite(BUZZ,LOW);}
+      {noTone(BUZZ);}
   }
   
 void fType(int x)
