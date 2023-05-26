@@ -11,6 +11,7 @@ char * DayName(int number)  // get Day Name from EEPROM
     {
       static char  locBuff[7];
       sprintf(locBuff,"%s",Hari[number]);
+      Serial.println(number-1);
       return locBuff;
     }
 

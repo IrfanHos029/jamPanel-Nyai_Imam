@@ -3,7 +3,7 @@
 
 #define alamatRTC 0x68
 #define alamatEEPROMCekToken 0
-#define tokenRTC 0xAA //<== rubah token jika ingin nilai baru
+#define tokenRTC 0xAB //<== rubah token jika ingin nilai baru
 
 String strNamaHari[] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"};
 
@@ -42,7 +42,7 @@ void loop() {
   byte hari, tanggal, bulan, jam, menit, detik;
   
   bacaRTC(hari, tanggal, bulan, tahun, jam, menit, detik);
-  Serial.print(strNamaHari[1]);
+  Serial.print(strNamaHari[hari]);
   Serial.print(", ");
   Serial.print(tanggal);
   Serial.print('/');

@@ -39,7 +39,7 @@ char *pasar[] ={"WAGE", "KLIWON", "LEGI", "PAHING", "PON"};
 char *mounthJawa[]= {"MUHARRAM","SHAFAR","RAB.AWAL","RAB.AKHIR","JUM.AWAL","JUM.AKHIR","RAJAB","SYA'BAN","RAMADHAN","SYAWAL","DZULQA'DAH","DZULHIJAH"};
 char *sholatCall[] = {"IMSAK","SUBUH","TERBIT","DHUHA","DUHUR","ASHAR","MAGRIB","ISYA","JUM'AT"};   
 //char *sholatCallDis[] = {"IMSAK","SUBUH","TERBT","DHUHA","DUHUR","ASHAR","MAGRB","ISYA","JUMAT"};  
-char *Hari[] = {"SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU","MINGGU"};
+char *Hari[] = {"MINGGU","SENIN","SELASA","RABU","KAMIS","JUM'AT","SABTU"};
 int maxday[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 RTClib          RTC;
@@ -140,6 +140,7 @@ void setup()
   Buzzer(1); delay(80);
   Buzzer(0); delay(80);
  }
+ //Clock.setDoW(6);
  Buzzer(0);
  delay(1000);
   }
@@ -155,7 +156,7 @@ void loop()
     DoSwap  = false ;
     fType(1);  
     Disp.clear();
-
+    
     // =========================================
     // List of Display Component Block =========
     // =========================================
