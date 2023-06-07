@@ -111,7 +111,7 @@ int         DHeight = Disp.height();
 boolean     DoSwap; 
 int         RunSel    = 1; //
 int         RunFinish = 0 ;
-const byte reset = 3;
+//const byte reset = 3;
 static uint16_t saveTime = 0;
 bool stateBlink=false;
 
@@ -128,8 +128,8 @@ void setup()
   { //init comunications 
     Wire.begin();
     Serial.begin(9600);
-    digitalWrite(reset,HIGH);
-     pinMode(reset,OUTPUT);
+//    digitalWrite(reset,HIGH);
+    
      pinMode(BUZZ, OUTPUT); 
          
     // Get Saved Parameter from EEPROM   
@@ -152,7 +152,7 @@ void loop()
   { 
     // Reset & Init Display State
     update_All_data();   //every time
-    check_azzan();
+     check_azzan();
     DoSwap  = false ;
     fType(1);  
     Disp.clear();
@@ -160,14 +160,15 @@ void loop()
     // =========================================
     // List of Display Component Block =========
     // =========================================
-
+    Serial.println(String() + "data: " + SholatNow);
+     Serial.println(String() + "floatnow: " + floatnow);
     anim_JG(1);                                                 // addr: 1 show date time
     drawSide2(2);
-    dwMrq(TGLJAWA(),75,2,3); 
+    dwMrq(TGLJAWA(),50,2,3); 
     drawSide1(4);
-    dwMrq(drawNama1(),75,1,5);  //running text
-    dwMrq(drawNama2(),75,2,6);  //running text
-     // drawSholat(1);
+    dwMrq(drawNama1(),45,1,5);  //running text
+    dwMrq(drawNama2(),45,2,6);  //running text
+      drawSholat(7);
     
     drawAzzan(100); 
     //runningAfterAdzan(101);
@@ -179,8 +180,8 @@ void loop()
     if(RunFinish==3) {RunSel = 4; RunFinish =0;}
     if(RunFinish==4)  {RunSel = 5;  RunFinish =0;} 
     if(RunFinish==5)  {RunSel = 6;  RunFinish =0;} 
-    if(RunFinish==6)  {RunSel = 1;  RunFinish =0;}
-
+    if(RunFinish==6)  {RunSel = 7;  RunFinish =0;}
+    if(RunFinish==7)  {RunSel = 1;  RunFinish =0;}
    
     if(RunFinish==100)  {RunSel = 1;  RunFinish =0;} 
     //if(RunFinish==4)  {RunSel = 1;  RunFinish =0;} 
@@ -196,7 +197,7 @@ void loop()
 // =========================================
 void Disp_init() 
   { Disp.setDoubleBuffer(true);
-    Timer1.initialize(2000);
+    Timer1.initialize(1500);
     Timer1.attachInterrupt(scan);
     setBrightness(200);
     fType(1);  
@@ -245,8 +246,9 @@ void check_azzan()
             if(floatnow >= sholatT[i])
               {
                 SholatNow = i;
-                if(!azzan and (floatnow > sholatT[i]) and (floatnow < (sholatT[i]+0.01))) 
+                if(!azzan and (floatnow > sholatT[i]) and (floatnow < (sholatT[i]+0.02))) 
                   { 
+                    if(daynow ==   6 and SholatNow ==4) {jumat=true;}
                     azzan =true;
                     RunSel = 100;
                   }  

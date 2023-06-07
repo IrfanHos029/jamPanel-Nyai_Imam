@@ -6,7 +6,7 @@ void drawAzzan(int DrawAdd)
   {
     // check RunSelector
     if(!dwDo(DrawAdd)) return;
-    uint8_t           ct_limit =40;  //harus angka genap
+    uint8_t           ct_limit =80;  //harus angka genap
     static uint8_t    ct;
     static uint16_t   lsRn;
     uint16_t          Tmr = millis();
@@ -65,7 +65,7 @@ void runningAfterAdzan(int DrawAdd) //running teks ada jam nya
     if((Tmr-lsRn)> Speed)
     { lsRn = Tmr;
         if (x < fullScroll) {++x;}
-   else {  dwDone(DrawAdd); x=0; BuzzerBlink(false); digitalWrite(reset,LOW);  return;}
+   else {  dwDone(DrawAdd); x=0; BuzzerBlink(false);  return;}
               
         fType(5);  //Marquee    jam yang tampil di bawah
         Disp.drawText(DWidth - x, 0, out); 
@@ -350,7 +350,7 @@ void anim_JG(int DrawAdd)
     Jam_GD(17-y,y-17,67-y);      
     
     }
-
+unsigned long lss=0;
 void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada jam nya
   { 
     // check RunSelector
@@ -359,11 +359,11 @@ void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada 
     if (reset_x !=0) { x=0;reset_x = 0;}      
 
        
-    static uint16_t   lsRn;
+    //static uint16_t   lsRn;
     int fullScroll = Disp.textWidth(msg) + DWidth;    
-    uint16_t          Tmr = millis();
-    if((Tmr-lsRn)> Speed)
-      { lsRn=Tmr;
+    uint32_t          Tmr = millis();
+    if((Tmr-lss)> Speed)
+      { lss=Tmr;
         if (x < fullScroll) {++x;}
         else {  dwDone(DrawAdd); 
                 x = 0;return;}
@@ -374,7 +374,7 @@ void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada 
         fType(1);
         if (x<=6)                     { drawGreg_TS(16-x);}
         else if (x>=(fullScroll-6))   { drawGreg_TS(16-(fullScroll-x));}
-        else                          { Disp.drawRect(1,8,62,14);
+        else                          { //Disp.drawRect(1,8,62,14);
                                         drawGreg_TS(9);}//posisi jamnya yang bawah
         }
      else if(dDT==2) //jam yang diatas
@@ -382,7 +382,7 @@ void dwMrq(const char* msg, int Speed, int dDT, int DrawAdd) //running teks ada 
         fType(1);
         if (x<=6)                     { drawGreg_TS(x-6);}
         else if (x>=(fullScroll-6))   { drawGreg_TS((fullScroll-x)-6);}
-        else                          {  Disp.drawRect(1,1,62,8);
+        else                          {  //Disp.drawRect(1,1,62,8);
                                         drawGreg_TS(0);}  //posisi jam nya yang diatas
         fType(7); //Marquee  running teks dibawah
         Disp.drawText(DWidth - x, 9 , msg);//runinng teks dibawah

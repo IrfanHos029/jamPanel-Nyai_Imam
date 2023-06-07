@@ -82,16 +82,6 @@ void drawShow2(int sNum,int c){
     DoSwap = true;
 }
 
-void Reset(byte state)
-{
-  if(state==1){
-    digitalWrite(reset,0);
-  }
-  else{
-    digitalWrite(reset,0);
-  }
-}
-
  char * TGLJAWA()
     {
       static char  out[45];
